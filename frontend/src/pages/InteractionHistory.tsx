@@ -40,8 +40,8 @@ const typeIconBg: Record<string, string> = {
 
 const sentimentConfig = {
   positive: { icon: SmilePlus, color: 'text-emerald-600', bg: 'bg-emerald-50', border: 'border-emerald-200', badge: 'bg-emerald-100 text-emerald-700', dot: 'bg-emerald-500', label: 'Positive' },
-  neutral:  { icon: Meh,       color: 'text-sky-600',     bg: 'bg-sky-50',     border: 'border-sky-200',     badge: 'bg-sky-100 text-sky-700',         dot: 'bg-sky-500',     label: 'Neutral'  },
-  negative: { icon: Frown,     color: 'text-rose-600',    bg: 'bg-rose-50',    border: 'border-rose-200',    badge: 'bg-rose-100 text-rose-700',       dot: 'bg-rose-500',    label: 'Negative' },
+  neutral: { icon: Meh, color: 'text-sky-600', bg: 'bg-sky-50', border: 'border-sky-200', badge: 'bg-sky-100 text-sky-700', dot: 'bg-sky-500', label: 'Neutral' },
+  negative: { icon: Frown, color: 'text-rose-600', bg: 'bg-rose-50', border: 'border-rose-200', badge: 'bg-rose-100 text-rose-700', dot: 'bg-rose-500', label: 'Negative' },
 };
 
 export default function InteractionHistory() {
@@ -53,12 +53,12 @@ export default function InteractionHistory() {
 
   useEffect(() => { dispatch(fetchInteractions()); }, [dispatch]);
 
- const types = [
-  "All",
-  ...Array.from(new Set(interactions.map((i:any) => i.interaction_type))),
-];
+  const types = [
+    "All",
+    ...Array.from(new Set(interactions.map((i: any) => i.interaction_type))),
+  ];
 
-  const filtered = interactions.filter((i:any) => {
+  const filtered = interactions.filter((i: any) => {
     const matchesType = filterType === 'All' || i.interaction_type === filterType;
     const q = query.toLowerCase();
     const matchesQuery = !q ||
@@ -71,8 +71,8 @@ export default function InteractionHistory() {
 
   // Stats
   const total = interactions.length;
-  const positive = interactions.filter((i:any) => i.sentiment === 'positive').length;
-  const thisMonth = interactions.filter((i:any) => {
+  const positive = interactions.filter((i: any) => i.sentiment === 'positive').length;
+  const thisMonth = interactions.filter((i: any) => {
     const d = new Date(i.interaction_date);
     const now = new Date();
     return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
@@ -106,9 +106,9 @@ export default function InteractionHistory() {
       <div className="flex-shrink-0 px-4 md:px-6 py-4 bg-white/70 backdrop-blur-sm border-b border-slate-200/80">
         <div className="flex items-center gap-3 md:gap-6 overflow-x-auto pb-1">
           {[
-            { label: 'Total Interactions', value: total,     icon: BarChart2,   gradient: 'from-teal-500 to-teal-600'   },
-            { label: 'Positive Sentiment', value: positive,  icon: SmilePlus,   gradient: 'from-emerald-500 to-teal-500'},
-            { label: 'This Month',         value: thisMonth, icon: TrendingUp,  gradient: 'from-cyan-500 to-blue-500'   },
+            { label: 'Total Interactions', value: total, icon: BarChart2, gradient: 'from-teal-500 to-teal-600' },
+            { label: 'Positive Sentiment', value: positive, icon: SmilePlus, gradient: 'from-emerald-500 to-teal-500' },
+            { label: 'This Month', value: thisMonth, icon: TrendingUp, gradient: 'from-cyan-500 to-blue-500' },
           ].map(({ label, value, icon: Icon, gradient }) => (
             <div key={label} className="flex items-center gap-2.5 flex-shrink-0">
               <div className={`w-9 h-9 rounded-xl bg-gradient-to-br ${gradient} flex items-center justify-center shadow-sm`}>
@@ -135,11 +135,10 @@ export default function InteractionHistory() {
           <Filter className="w-3.5 h-3.5 text-slate-400 flex-shrink-0" />
           {types.map((t) => (
             <button key={t} onClick={() => setFilterType(t)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
-                filterType === t
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${filterType === t
                   ? 'bg-gradient-to-r from-teal-600 to-teal-500 text-white shadow-sm'
                   : 'bg-white border border-slate-200 text-slate-600 hover:border-teal-300 hover:text-teal-600'
-              }`}
+                }`}
             >
               {t}
             </button>
@@ -162,12 +161,18 @@ export default function InteractionHistory() {
           </div>
         ) : (
           <div className="space-y-3">
-            {filtered.map((interaction:any) => {
-              const TypeIcon = typeIcons[interaction.interaction_type] ?? Users;
-              const sentiment = sentimentConfig[interaction.sentiment as keyof typeof sentimentConfig] ?? sentimentConfig.neutral;
-              const SentimentIcon = sentiment.icon;
-              const iconGradient = typeIconBg[interaction.interaction_type] ?? 'from-slate-500 to-slate-700';
+            {filtered.map((interaction: any) => {
+              const TypeIcon =
+                typeIcons[interaction.interaction_type] ?? Users;
 
+              const sentiment =
+                sentimentConfig[
+                interaction.sentiment as keyof typeof sentimentConfig
+                ] ?? sentimentConfig.neutral;
+
+              const iconGradient =
+                typeIconBg[interaction.interaction_type] ??
+                "from-slate-500 to-slate-700";
               return (
                 <div key={interaction.id}
                   className="group bg-white rounded-2xl border border-slate-100 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-all duration-200 overflow-hidden animate-fade-in"
@@ -256,7 +261,7 @@ export default function InteractionHistory() {
                       {/* AI Follow-up tags */}
                       {interaction.ai_suggested_follow_ups && interaction.ai_suggested_follow_ups.length > 0 && (
                         <div className="flex flex-wrap gap-1.5 mt-2">
-                          {interaction.ai_suggested_follow_ups.slice(0, 2).map((fu:any, i:any) => (
+                          {interaction.ai_suggested_follow_ups.slice(0, 2).map((fu: any, i: any) => (
                             <span key={i} className="inline-flex items-center gap-1 px-2.5 py-1 bg-gradient-to-r from-teal-50 to-cyan-50 text-teal-700 rounded-full text-[10px] font-semibold border border-teal-200">
                               <span className="w-1 h-1 rounded-full bg-teal-500 inline-block" />
                               {fu}
