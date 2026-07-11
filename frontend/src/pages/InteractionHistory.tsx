@@ -11,7 +11,6 @@ import {
   deleteInteraction,
   setEditingInteraction,
 } from "../features/interaction/interactionSlice";
-
 import type { Interaction } from '../types';
 import { formatDate } from '../utils/formatters';
 import { setActiveView, setLogMode, showSuccess } from '../features/ui/uiSlice';
@@ -47,6 +46,7 @@ const sentimentConfig = {
 export default function InteractionHistory() {
   const dispatch = useAppDispatch();
   const { interactions, loading } = useAppSelector((s) => s.interaction);
+    const { searchQuery } = useAppSelector((s) => s.ui);
   const [query, setQuery] = useState('');
   const [filterType, setFilterType] = useState('All');
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
@@ -59,8 +59,9 @@ export default function InteractionHistory() {
   ];
 
   const filtered = interactions.filter((i: any) => {
+     
     const matchesType = filterType === 'All' || i.interaction_type === filterType;
-    const q = query.toLowerCase();
+    const q = searchQuery.toLowerCase();
     const matchesQuery = !q ||
       i.hcps?.name?.toLowerCase().includes(q) ||
       i.topics_discussed?.toLowerCase().includes(q) ||

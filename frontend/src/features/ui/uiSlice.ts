@@ -7,7 +7,8 @@ interface UIState {
   activeView: ActiveView;
   logMode: LogMode;
   successMessage: string | null;
-   sidebarCollapsed: boolean;
+  sidebarCollapsed: boolean;
+   searchQuery: string;
 }
 
 const initialState: UIState = {
@@ -15,6 +16,7 @@ const initialState: UIState = {
   logMode: "form",
   successMessage: null,
   sidebarCollapsed: false,
+  searchQuery: '',
 };
 
 const uiSlice = createSlice({
@@ -35,7 +37,9 @@ const uiSlice = createSlice({
     toggleSidebar(state) {
       state.sidebarCollapsed = !state.sidebarCollapsed;
     },
-
+    setSearchQuery(state, action: PayloadAction<string>) {
+      state.searchQuery = action.payload;
+    },
     clearSuccess(state) {
       state.successMessage = null;
     },

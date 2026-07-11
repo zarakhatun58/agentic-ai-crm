@@ -23,7 +23,7 @@ export default function Sidebar({ mobileOpen, onMobileClose }: SidebarProps) {
   }
 
   const content = (
-    <div className="flex flex-col h-full" style={{ background: 'linear-gradient(180deg, #020617 0%, #0f172a 60%, #042f2e 100%)' }}>
+    <div className="flex flex-col h-full min-h-0 overflow-hidden" style={{ background: 'linear-gradient(180deg, #020617 0%, #0f172a 60%, #042f2e 100%)' }}>
       {/* Logo */}
       <div className={`flex items-center gap-3 px-4 py-5 border-b border-white/10 ${sidebarCollapsed ? 'justify-center' : ''}`}>
         <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center shadow-glow-teal">
@@ -141,9 +141,11 @@ export default function Sidebar({ mobileOpen, onMobileClose }: SidebarProps) {
   return (
     <>
       {/* Desktop sidebar */}
-      <aside className={`hidden lg:flex flex-col flex-shrink-0 transition-all duration-300 shadow-sidebar ${
-        sidebarCollapsed ? 'w-[72px]' : 'w-64'
-      }`}>
+    <aside
+  className={`hidden lg:flex h-dvh overflow-hidden flex-col flex-shrink-0 transition-all duration-300 shadow-sidebar ${
+    sidebarCollapsed ? 'w-[72px]' : 'w-64'
+  }`}
+>
         {content}
       </aside>
 

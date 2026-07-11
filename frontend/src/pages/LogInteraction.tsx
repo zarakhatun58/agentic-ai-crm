@@ -45,7 +45,7 @@ export default function LogInteraction() {
   }
 
   return (
-    <div className="flex flex-col h-full overflow-hidden">
+    <div className="flex flex-col w-full h-full min-h-0 overflow-hidden">
       {/* ── Mode toggle bar ────────────────────────────────── */}
       <div className="flex-shrink-0 flex items-center gap-3 px-4 md:px-6 py-3 bg-white/80 backdrop-blur-sm border-b border-slate-200/80">
         <div className="flex p-1 bg-slate-100 rounded-xl gap-1">
@@ -54,8 +54,8 @@ export default function LogInteraction() {
               key={mode}
               onClick={() => dispatch(setLogMode(mode))}
               className={`flex items-center gap-2 px-3 md:px-4 py-2 rounded-lg text-xs md:text-sm font-semibold transition-all duration-200 ${logMode === mode
-                  ? 'bg-white text-slate-900 shadow-sm'
-                  : 'text-slate-500 hover:text-slate-700'
+                ? 'bg-white text-slate-900 shadow-sm'
+                : 'text-slate-500 hover:text-slate-700'
                 }`}
             >
               {mode === 'form' ? <LayoutGrid className="w-3.5 h-3.5" /> : <MessagesSquare className="w-3.5 h-3.5" />}
@@ -79,17 +79,17 @@ export default function LogInteraction() {
       </div>
 
       {/* ── Main content ────────────────────────────────────── */}
-      <div className="flex flex-1 min-h-0">
+      <div className="flex flex-1 min-h-0 overflow-hidden">
 
         {/* Form (visible on form mode, or always on desktop when sidebar shown) */}
         <form
           onSubmit={handleSubmit}
-          className={`flex flex-col min-h-0 transition-all duration-300 ${logMode === 'chat'
-              ? 'w-0 opacity-0 overflow-hidden pointer-events-none'
-              : 'flex-1 opacity-100'
+          className={`flex flex-col flex-1 min-w-0 min-h-0 overflow-hidden transition-all duration-300 ${logMode === 'chat'
+              ? 'w-0 flex-none opacity-0 pointer-events-none'
+              : 'opacity-100'
             }`}
         >
-          <div className="flex-1 overflow-y-auto px-4 md:px-6 py-5 space-y-5">
+          <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-4 md:px-6 py-5 space-y-5">
 
             {/* Section: Interaction Details */}
             <div className="card overflow-hidden">

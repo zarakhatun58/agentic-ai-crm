@@ -3,21 +3,53 @@
 @tailwind utilities;
 
 @layer base {
-  * { box-sizing: border-box; }
+  * {
+    box-sizing: border-box;
+  }
 
-  html { scroll-behavior: smooth; }
+  html,
+  body,
+  #root {
+     width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  }
+
+  html {
+    overflow: hidden;
+  }
 
   body {
     font-family: 'Inter', sans-serif;
     @apply antialiased text-slate-800;
-    background: linear-gradient(135deg, #f0fdfa 0%, #f8fafc 40%, #f0fdf4 100%);
-    min-height: 100vh;
+
+    background: linear-gradient(
+      135deg,
+      #f0fdfa 0%,
+      #f8fafc 40%,
+      #f0fdf4 100%
+    );
+
+    overflow: hidden;
+  }
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
   }
 
-  ::-webkit-scrollbar       { width: 5px; height: 5px; }
-  ::-webkit-scrollbar-track  { @apply bg-transparent; }
-  ::-webkit-scrollbar-thumb  { @apply bg-slate-300 rounded-full; }
-  ::-webkit-scrollbar-thumb:hover { @apply bg-teal-400; }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-slate-300 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-teal-400;
+  }
 }
 
 @layer components {

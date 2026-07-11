@@ -18,14 +18,23 @@ export default function ChatPanel() {
   const { messages, inputText, isThinking } = useAppSelector((s) => s.agent);
   const { form } = useAppSelector((s) => s.interaction);
   const { hcps } = useAppSelector((s) => s.hcp);
-  const bottomRef = useRef<HTMLDivElement>(null);
+  const messagesRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [aiSummary, setAiSummary] = useState("");
   const [followUps, setFollowUps] = useState<string[]>([]);
 
-  useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, isThinking]);
+ useEffect(() => {
+  const container = messagesRef.current;
+
+  if (!container) return;
+
+  requestAnimationFrame(() => {
+    container.scrollTo({
+      top: container.scrollHeight,
+      behavior: 'smooth',
+    });
+  });
+}, [messages, isThinking, aiSummary, followUps]);
 
   function handleSend() {
     const msg = inputText.trim();
@@ -85,7 +94,7 @@ export default function ChatPanel() {
   }
 
   return (
-    <div className="flex flex-col h-full rounded-2xl overflow-hidden border border-teal-100 shadow-card-hover">
+    <div className="flex flex-col flex-1 min-h-0 h-full max-h-full rounded-2xl overflow-hidden border border-teal-100 shadow-card-hover">
       {/* Header */}
       <div className="flex-shrink-0 flex items-center justify-between px-4 py-3.5 border-b border-teal-700/30"
         style={{ background: 'linear-gradient(135deg, #042f2e 0%, #0f766e 60%, #0891b2 100%)' }}
@@ -111,7 +120,8 @@ export default function ChatPanel() {
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto px-3 py-4 space-y-3 bg-gradient-to-b from-slate-50/80 to-white">
+      <div ref={messagesRef}
+  className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-3 py-4 space-y-3 bg-gradient-to-b from-slate-50/80 to-white">
         {messages.map((msg) => {
           if (msg.role === 'tool') {
             return (
@@ -195,7 +205,7 @@ export default function ChatPanel() {
           </div>
         )}
 
-        <div ref={bottomRef} />
+        <div ref={messagesRef} />
       </div>
 
       {/* Suggestions (fresh chat only) */}
